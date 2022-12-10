@@ -47,10 +47,11 @@ namespace Complete
         {
             // Reduce current health by the amount of damage done.
             m_CurrentHealth -= amount;
+            m_CurrentHealth = m_CurrentHealth > 100 ? 100 : m_CurrentHealth;
 
             // Change the UI elements appropriately.
             SetHealthUI ();
-
+            
             // If the current health is at or below zero and it has not yet been registered, call OnDeath.
             if (m_CurrentHealth <= 0f && !m_Dead)
             {

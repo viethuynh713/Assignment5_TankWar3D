@@ -2,7 +2,8 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+namespace Complete
+{
 public class RoomPnlUI : MonoBehaviour
 {
     [SerializeField]
@@ -54,6 +55,7 @@ public class RoomPnlUI : MonoBehaviour
         if(PhotonNetwork.IsMasterClient)
         {
             m_control.PlayGame();
+            GameManager.Instance.StartGame();
         }
-    }
+    }}
 }
