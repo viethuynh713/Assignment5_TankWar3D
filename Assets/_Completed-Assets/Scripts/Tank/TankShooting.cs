@@ -51,7 +51,7 @@ namespace Complete
             m_AimSlider.value = m_MinLaunchForce;
 
             // If the max force has been exceeded and the shell hasn't yet been launched...
-            if (GetComponent<TankInfo>().IsMyPlayer)
+            if (GetComponent<TankControl>().CanMove())
             {
                 if (m_CurrentLaunchForce >= m_MaxLaunchForce && !m_Fired)
                 {
