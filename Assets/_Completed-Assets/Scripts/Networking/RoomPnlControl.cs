@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-
+namespace Complete
+{
 public class RoomPnlControl : MonoBehaviourPunCallbacks
 {
     [SerializeField]
@@ -205,6 +206,7 @@ public class RoomPnlControl : MonoBehaviourPunCallbacks
     public void DeactiveRoomPnl()
     {
         this.gameObject.SetActive(false);
+        
     }
 
     [PunRPC]
@@ -240,4 +242,5 @@ public class RoomPnlControl : MonoBehaviourPunCallbacks
     {
         view.RPC("RemovePlayer", RpcTarget.All, id);
     }
+}
 }

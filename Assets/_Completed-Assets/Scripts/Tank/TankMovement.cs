@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using Photon.Pun;
 
 namespace Complete
 {
+    [RequireComponent(typeof(TankControl))]
     public class TankMovement : MonoBehaviour
     {
+        public TankControl _control;
+        
         public int m_PlayerNumber = 1;              // Used to identify which tank belongs to which player.  This is set by this tank's manager.
         public float m_Speed = 12f;                 // How fast the tank moves forward and back.
         public float m_TurnSpeed = 180f;            // How fast the tank turns in degrees per second.
@@ -19,10 +23,13 @@ namespace Complete
         private float m_TurnInputValue;             // The current value of the turn input.
         private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
         private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
-
+        public bool IsMaxSpeed = false;
+        public float durationMaxSpeed = 5;
+        private float startTime = 0;
         private void Awake ()
         {
             m_Rigidbody = GetComponent<Rigidbody> ();
+            _control.GetComponent<TankControl>();
         }
 
 
@@ -64,7 +71,7 @@ namespace Complete
             // The axes names are based on player number.
             m_MovementAxisName = "Vertical" + m_PlayerNumber;
             m_TurnAxisName = "Horizontal" + m_PlayerNumber;
-
+            
             // Store the original pitch of the audio source.
             m_OriginalPitch = m_MovementAudio.pitch;
         }
@@ -73,18 +80,24 @@ namespace Complete
         private void Update ()
         {
             // Store the value of both input axes.
-            if (GetComponent<TankInfo>().IsMyPlayer)
+            m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
+            m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
+            if(IsMaxSpeed)
             {
-                m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-                m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+                startTime += Time.deltaTime;
+                if(startTime > durationMaxSpeed)
+                {
+                    IsMaxSpeed = false;
+                    m_Speed = 12;
+                    startTime = 0;
+                }
             }
-            else
-            {
-                m_MovementInputValue = 0;
-                m_TurnInputValue = 0;
-            }
-
             EngineAudio ();
+        }
+        public void SetMaxSpeed(float speed)
+        {
+            m_Speed = speed;
+            IsMaxSpeed = true;
         }
 
         public void MoveByBot(float movement, float turn)
@@ -126,8 +139,11 @@ namespace Complete
         private void FixedUpdate ()
         {
             // Adjust the rigidbodies position and orientation in FixedUpdate.
-            Move ();
-            Turn ();
+            if(_control.CanMove())
+            {
+                Move ();
+                Turn ();
+            }
         }
 
 

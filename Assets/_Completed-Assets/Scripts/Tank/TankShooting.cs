@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+using Photon.Pun;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Complete
 {
+    [RequireComponent(typeof(TankControl))]
     public class TankShooting : MonoBehaviour
     {
+        public TankControl _control;
         public int m_PlayerNumber = 1;              // Used to identify the different players.
         public Rigidbody m_Shell;                   // Prefab of the shell.
         public Transform m_FireTransform;           // A child of the tank where the shells are spawned.
@@ -31,11 +34,11 @@ namespace Complete
         }
 
 
-        private void Start ()
+        private void Awake ()
         {
             // The fire axis is based on the player number.
             m_FireButton = "Fire" + m_PlayerNumber;
-
+            _control.GetComponent<TankControl>();
             // The rate that the launch force charges up is the range of possible forces by the max charge time.
             m_ChargeSpeed = (m_MaxLaunchForce - m_MinLaunchForce) / m_MaxChargeTime;
         }
@@ -43,6 +46,7 @@ namespace Complete
 
         private void Update ()
         {
+            if(!_control.CanMove())return;
             // The slider should have a default value of the minimum launch force.
             m_AimSlider.value = m_MinLaunchForce;
 
@@ -90,11 +94,11 @@ namespace Complete
             m_Fired = true;
 
             // Create an instance of the shell and store a reference to it's rigidbody.
-            Rigidbody shellInstance =
-                Instantiate (m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+            var shellInstacne =
+               PhotonNetwork.Instantiate ("Bullet", m_FireTransform.position, m_FireTransform.rotation);
 
             // Set the shell's velocity to the launch force in the fire position's forward direction.
-            shellInstance.velocity = m_CurrentLaunchForce * m_FireTransform.forward; 
+            shellInstacne.GetComponent<Rigidbody>().velocity = m_CurrentLaunchForce * m_FireTransform.forward; 
 
             // Change the clip to the firing clip and play it.
             m_ShootingAudio.clip = m_FireClip;
