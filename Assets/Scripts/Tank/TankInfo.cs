@@ -41,5 +41,10 @@ public class TankInfo : MonoBehaviour
             camera.transform.localPosition = pos + new Vector3(0, 0, -2);
         }
         transform.position = position;
+        // set bot
+        if (m_isBot)
+        {
+            gameObject.AddComponent<TankBT>();
+        }
     }
 }

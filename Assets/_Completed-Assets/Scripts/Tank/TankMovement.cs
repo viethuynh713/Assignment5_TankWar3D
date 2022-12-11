@@ -87,6 +87,13 @@ namespace Complete
             EngineAudio ();
         }
 
+        public void MoveByBot(float movement, float turn)
+        {
+            m_MovementInputValue = movement;
+            m_TurnInputValue = turn;
+            EngineAudio();
+        }
+
 
         private void EngineAudio ()
         {
