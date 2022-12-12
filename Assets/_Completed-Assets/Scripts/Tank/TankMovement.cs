@@ -80,9 +80,17 @@ namespace Complete
         private void Update ()
         {
             // Store the value of both input axes.
-            m_MovementInputValue = Input.GetAxis (m_MovementAxisName);
-            m_TurnInputValue = Input.GetAxis (m_TurnAxisName);
-            if(IsMaxSpeed)
+            if (GetComponent<TankControl>().IsBot)
+            {
+                m_MovementInputValue = GetComponent<TankBT>().movement;
+                m_TurnInputValue = GetComponent<TankBT>().turn;
+            }
+            else if (GetComponent<TankControl>().CanMove())
+            {
+                m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
+                m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
+            }
+            if (IsMaxSpeed)
             {
                 startTime += Time.deltaTime;
                 if(startTime > durationMaxSpeed)
@@ -92,21 +100,13 @@ namespace Complete
                     startTime = 0;
                 }
             }
-            EngineAudio ();
+            EngineAudio();
         }
         public void SetMaxSpeed(float speed)
         {
             m_Speed = speed;
             IsMaxSpeed = true;
         }
-
-        public void MoveByBot(float movement, float turn)
-        {
-            m_MovementInputValue = movement;
-            m_TurnInputValue = turn;
-            EngineAudio();
-        }
-
 
         private void EngineAudio ()
         {
@@ -139,11 +139,8 @@ namespace Complete
         private void FixedUpdate ()
         {
             // Adjust the rigidbodies position and orientation in FixedUpdate.
-            if(_control.CanMove())
-            {
-                Move ();
-                Turn ();
-            }
+            Move ();
+            Turn ();
         }
 
 
