@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UIElements;
+
 namespace Complete
 {
     public class GameManager : MonoBehaviour
@@ -12,6 +14,7 @@ namespace Complete
         [SerializeField] public List<Vector3> m_InitPosA;
         [SerializeField] public List<Vector3> m_InitPosB;
         [SerializeField] public LayerMask enemyLayerMask;
+        [SerializeField] public LayerMask itemLayerMask;
         private float SpawnTime = 5;
         private float startTime;
         public PhotonView view;
@@ -33,11 +36,14 @@ namespace Complete
                 {
                     var p = PhotonNetwork.Instantiate("Tank",m_InitPosA[i],Quaternion.Euler(0,-90,0));
                     p.GetComponent<TankControl>().SetCamera();
+                    p.GetComponent<TankControl>().team = Team.A;
+
                 }
                 else if(player.Value.IsBot && PhotonNetwork.IsMasterClient)
                 {
                     var bot = PhotonNetwork.Instantiate("Tank",m_InitPosA[i],Quaternion.Euler(0,-90,0));
                     view.RPC("FindBot",RpcTarget.All,bot.GetComponent<PhotonView>().ViewID);
+                    bot.GetComponent<TankControl>().team = Team.A;
                 }
                 i++;
             }
@@ -48,12 +54,14 @@ namespace Complete
                 {
                     var p = PhotonNetwork.Instantiate("Tank",m_InitPosB[i],Quaternion.Euler(0,90,0));
                     p.GetComponent<TankControl>().SetCamera();
-                
+                    p.GetComponent<TankControl>().team = Team.B;
+
                 }
                 else if(player.Value.IsBot && PhotonNetwork.IsMasterClient)
                 {
                     var bot = PhotonNetwork.Instantiate("Tank",m_InitPosB[i],Quaternion.Euler(0,90,0));
                     view.RPC("FindBot",RpcTarget.All,bot.GetComponent<PhotonView>().ViewID);
+                    bot.GetComponent<TankControl>().team = Team.B;
                 }
                 i++;
             }

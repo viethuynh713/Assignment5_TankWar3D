@@ -63,7 +63,8 @@ public class TaskGoRandom : Node
                 //    tankBT.Turn(Vector3.Dot(_transform.forward, wp.position - _transform.position));
                 //    tankBT.Move(0);
                 //}
-                tankBT.Turn(Vector3.Dot(_transform.forward, wp.position - _transform.position));
+                //tankBT.Turn(Vector3.Dot(_transform.forward, wp.position - _transform.position));
+                _transform.LookAt(wp);
                 tankBT.Move(1);
             }
         }

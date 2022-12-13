@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using BehaviorTree;
+using Complete;
 
 public class CheckItemInRange : Node
 {
-    private int itemLayerMask = 1 << 12;
     private Transform _transform;
 
     public CheckItemInRange(Transform transform)
@@ -20,7 +20,7 @@ public class CheckItemInRange : Node
         object t = GetData("Item");
         if (t == null)
         {
-            Collider[] colliders = Physics.OverlapSphere(_transform.position, TankBT.viewRadius, itemLayerMask);
+            Collider[] colliders = Physics.OverlapSphere(_transform.position, TankBT.viewRadius, GameManager.Instance.itemLayerMask);
             if (colliders.Length > 0)
             {
                 foreach (Collider collider in colliders)

@@ -9,7 +9,7 @@ namespace Complete
     {
         public CinemachineVirtualCamera cam;
         public bool IsBot = false;
-
+        public Team team;
         public PhotonView view;
         public void SetCamera() {
             if (CanMove())

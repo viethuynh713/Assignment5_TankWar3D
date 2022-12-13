@@ -22,7 +22,8 @@ public class CheckEnemyInRange : Node
         {
             foreach (Collider collider in colliders)
             {
-                if (Vector3.Angle(_transform.forward, collider.transform.position - _transform.position) < TankBT.viewAngle)
+                if (Vector3.Angle(_transform.forward, collider.transform.position - _transform.position) < TankBT.viewAngle
+                    && collider.gameObject.GetComponent<TankControl>().team != _transform.gameObject.GetComponent<TankControl>().team)
                 {
                     parent.parent.SetData("Enemy", collider.transform);
                     state = NodeState.SUCCESS;

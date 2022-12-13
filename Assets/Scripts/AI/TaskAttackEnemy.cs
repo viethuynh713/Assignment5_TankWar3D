@@ -31,7 +31,8 @@ public class TaskAttackEnemy : Node
         //    tankBT.Turn(Vector3.Dot(_transform.forward, item.position - _transform.position));
         //    tankBT.Move(0);
         //}
-        tankBT.Turn(Vector3.Dot(_transform.forward, enemy.position - _transform.position));
+        _transform.LookAt(enemy);
+        //tankBT.Turn(Vector3.Dot(_transform.forward, enemy.position - _transform.position));
         tankBT.Move(1);
         if (Vector3.Distance(_transform.position, enemy.position) < 150f)
         {

@@ -31,7 +31,8 @@ public class TaskGoToItem : Node
         //    tankBT.Turn(Vector3.Dot(_transform.forward, item.position - _transform.position));
         //    tankBT.Move(0);
         //}
-        tankBT.Turn(Vector3.Dot(_transform.forward, item.position - _transform.position));
+        //tankBT.Turn(Vector3.Dot(_transform.forward, item.position - _transform.position));
+        _transform.LookAt(item);
         tankBT.Move(1);
 
         state = NodeState.RUNNING;

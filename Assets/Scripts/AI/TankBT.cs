@@ -8,10 +8,10 @@ public class TankBT : BehaviorTree.Tree
     public float turn = 0; // -1 left, 0 stop, 1 right
     public float fire = -1; // -1 none, 0 release, 1 hold, 2 press
 
-    public static float viewRadius = 200f;
+    public static float viewRadius = 500f;
     public static float hitBoxRadius = 28f;
     public static float viewAngle = 60f;
-    public static float degreeError = 5f;
+    public static float degreeError = 20f;
 
     protected override Node SetupTree()
     {
