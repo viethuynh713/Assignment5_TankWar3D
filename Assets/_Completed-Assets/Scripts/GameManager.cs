@@ -11,6 +11,7 @@ namespace Complete
         [SerializeField] public RoomPnlControl m_RoomControl;
         [SerializeField] public List<Vector3> m_InitPosA;
         [SerializeField] public List<Vector3> m_InitPosB;
+        [SerializeField] public LayerMask enemyLayerMask;
         private float SpawnTime = 5;
         private float startTime;
         public PhotonView view;

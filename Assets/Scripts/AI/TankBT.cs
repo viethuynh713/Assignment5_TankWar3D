@@ -38,11 +38,11 @@ public class TankBT : BehaviorTree.Tree
         float moveUnit = 1.0f / 3;
         if (moveType > 0)
         {
-            movement = movement + moveUnit > 1 ? 1 : movement + moveUnit;
+            movement = movement + moveUnit > 0.5f ? 0.5f : movement + moveUnit;
         }
         else if (moveType < 0)
         {
-            movement = movement - moveUnit < -1 ? -1 : movement - moveUnit;
+            movement = movement - moveUnit < -0.5f ? -0.5f : movement - moveUnit;
         }
         else
         {
@@ -62,11 +62,11 @@ public class TankBT : BehaviorTree.Tree
         float turnUnit = 1.0f / 3;
         if (turnType > 0)
         {
-            turn = turn + turnUnit > 1 ? 1 : turn + turnUnit;
+            turn = turn + turnUnit > 0.5f ? 0.5f : turn + turnUnit;
         }
         else if (turnType < 0)
         {
-            turn = turn - turnUnit < -1 ? -1 : turn - turnUnit;
+            turn = turn - turnUnit < -0.5f ? -0.5f : turn - turnUnit;
         }
         else
         {

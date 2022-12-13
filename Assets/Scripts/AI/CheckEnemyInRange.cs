@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using BehaviorTree;
+using Complete;
 
 public class CheckEnemyInRange : Node
 {
-    private int enemyLayerMask = 1 << 9;
     private Transform _transform;
 
     public CheckEnemyInRange(Transform transform)
@@ -17,7 +17,7 @@ public class CheckEnemyInRange : Node
     public override NodeState Tick()
     {
         Debug.Log("Check Enemy In Range");
-        Collider[] colliders = Physics.OverlapSphere(_transform.position, TankBT.viewRadius, enemyLayerMask);
+        Collider[] colliders = Physics.OverlapSphere(_transform.position, TankBT.viewRadius, GameManager.Instance.enemyLayerMask);
         if (colliders.Length > 0)
         {
             foreach (Collider collider in colliders)
